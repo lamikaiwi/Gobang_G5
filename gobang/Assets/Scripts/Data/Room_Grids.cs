@@ -5,7 +5,12 @@ using UnityEngine.UI;
 using TMPro;
 public class Room_Grids : MonoBehaviour
 {
-
+    /*
+     * This script is to init a button, which include the room detail,
+     * located in room list, which is shown after user clicked multiplayer
+     * 
+     * When the gameobject with this script is clicked, call Join_Room of GameManager
+     */
 
     [SerializeField] TMP_Text roomID;
     [SerializeField] TMP_Text player1Name;

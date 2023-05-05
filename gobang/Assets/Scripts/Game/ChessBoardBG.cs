@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ChessBoardBG : MonoBehaviour
 {
+    /*
+     * change the skin of the chessborad
+     * 
+     */
     public static ChessBoardBG Instance { set; get; }
     private void Awake()
     {

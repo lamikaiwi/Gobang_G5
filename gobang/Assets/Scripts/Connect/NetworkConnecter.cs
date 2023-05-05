@@ -10,6 +10,12 @@ using Newtonsoft.Json;
 
 public class NetworkConnecter : NetworkBehaviour
 {
+    /*
+     * This is the main part of server, in short it will recieve message from client, and send that message to target client
+     * For every function with header [ServerRpc(RequireOwnership = false)] is called by client and run on server.
+     * For every function with header [ClientRpc] is called by server and run on client.
+     * For every function with no header is called by server and run on server. We can do some data validation here if we want.
+     */
     public static NetworkConnecter Instance { get; set; }
 
 
@@ -19,31 +25,6 @@ public class NetworkConnecter : NetworkBehaviour
     Dictionary<string, ulong> Dict_Name_CID = new();
     Dictionary<string, int> Dict_Name_rID = new();
     Dictionary<string, ClassManager.PlayerLog> Dict_Name_Log = new();
-
-    /*
-    class Room2 {
-        public int roomID;
-        public int playerNum;
-        public string state;
-        public string player1Name;
-        public string player2Name;
-        public List<string> spectorName = new();
-        public Room2() { 
-        
-        }
-
-        public Room2(int _roomID, string p1Name) {
-            this.roomID = _roomID;
-            this.playerNum = 1;
-            this.state = "waiting";
-            this.player1Name = p1Name;
-            this.player2Name = "";
-     
-        }
-
-
-    }
-    */
 
 
     public override void OnNetworkSpawn()
@@ -233,81 +214,6 @@ public class NetworkConnecter : NetworkBehaviour
     void Server_Client_Message_ClientRpc(ClassManager.MessageType messageType, string message, ClientRpcParams clientRpcParams) {
         GameManager.Instance.Receive_Message(messageType, message);
     }
-
-
-
-
-    /*
-
-    [ServerRpc(RequireOwnership = false)]
-    public void Send_Message_To_Opponent_ServerRpc(ClassManager.MessageType messageType , int roomID, string message, ServerRpcParams serverRpcParams = default)
-    {
-        if (!IsServer) return;
-
-        ClientRpcParams clientRpcParams = new ClientRpcParams
-        {
-            Send = new ClientRpcSendParams
-            {
-                //TargetClientIds = new ulong[] { rooms[roomID].GetOpponent(serverRpcParams.Receive.SenderClientId) }
-            }
-        };
-        Send_Message_To_Opponent_ClientRPC(messageType, message, clientRpcParams);
-    }
-
-    [ClientRpc]
-    private void Send_Message_To_Opponent_ClientRPC(ClassManager.MessageType messageType, string message, ClientRpcParams clientRpcParams = default)
-    {
-        ChessBoardManager.Instance.Receive_Message_From_Server(messageType, message);
-    }
-
-
-    [ServerRpc(RequireOwnership = false)]
-    public void Send_Message_To_Players_ServerRpc(ClassManager.MessageType messageType, int roomID, string message, ServerRpcParams serverRpcParams = default)
-    {
-        if (!IsServer) return;
-
-        ClientRpcParams clientRpcParams = new ClientRpcParams
-        {
-            Send = new ClientRpcSendParams
-            {
-                //TargetClientIds =  rooms[roomID].Get_Players()
-            }
-        };
-        Send_Message_To_Players_ClientRPC(messageType, message, clientRpcParams);
-    }
-
-    [ClientRpc]
-    private void Send_Message_To_Players_ClientRPC(ClassManager.MessageType messageType, string message, ClientRpcParams clientRpcParams = default)
-    {
-        ChessBoardManager.Instance.Receive_Message_From_Server(messageType, message);
-    }
-
-
-
-
-    [ServerRpc(RequireOwnership = false)]
-    public void Send_Message_To_Room_ServerRpc(ClassManager.MessageType messageType, int roomID, string message, ServerRpcParams serverRpcParams = default)
-    {
-        if (!IsServer) return;
-
-        ClientRpcParams clientRpcParams = new ClientRpcParams
-        {
-            Send = new ClientRpcSendParams
-            {
-                //TargetClientIds = rooms2[roomID].GetAllClientID()
-            }
-        };
-        Send_Message_To_Room_ClientRPC(messageType, message, clientRpcParams);
-    }
-
-    [ClientRpc]
-    private void Send_Message_To_Room_ClientRPC(ClassManager.MessageType messageType, string message, ClientRpcParams clientRpcParams = default)
-    {
-        ChessBoardManager.Instance.Receive_Message_From_Server(messageType, message);
-    }
-
-    */
-
 
     [ServerRpc(RequireOwnership = false)]
     public void Send_Message_To_All_ServerRpc(ClassManager.MessageType messageType, string message)

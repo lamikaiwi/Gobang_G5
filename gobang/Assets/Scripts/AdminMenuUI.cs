@@ -8,6 +8,26 @@ using TMPro;
 using Newtonsoft.Json;
 public class AdminMenuUI : MonoBehaviour
 {
+    /*
+     *  This script is the manager of AdminMenu.
+     *  There are 5 main function
+     *  1. Refresh
+     *  2. Show_Profile
+     *  3. Show_Game_Record
+     *  4. Show_Friend_List
+     *  5. Delete_User
+     *  
+     *  Each of them will call an IEnumerator.
+     *  The IEnumerator interface is used to define the behavior of coroutine methods, 
+     *  code inside the coroutine runs on a separate thread from the main thread.
+     * 
+     *  Refresh: Run the Get_All_Users_IEnumerator() IEnumerator, it will access the database and get all the user names, and show it on user list.
+     *  Show_Profile: Run the Show_ProfileE() IEnumerator, it will access the database and show the selected user profile.
+     *  Show_Game_Record: Run the Get_Game_Records_IEnumerator() IEnumerator, it will access the database and show the selected user game record.
+     *  Show_Friend_List: Run the Get_Friend_Dict_IEnumerator() IEnumerator, it will access the database and show the selected user friend list.
+     *  Delete_User: Run the Delete_User_IEnumerator() IEnumerator, it will delect the selected user immediately and update the database.
+     *  
+     */
     public static AdminMenuUI Instance { set; get; }
     private void Awake()
     {

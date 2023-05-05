@@ -8,14 +8,18 @@ using Newtonsoft.Json;
 
 public class ChessBoardManager : MonoBehaviour
 {
-
+    /*
+     * This script is created at the beginning of this CSCI3100 project. So it is quite ugly and not that readable.
+     * In short, it manage a ChessBoard gameplay
+     * 
+     */
     public static ChessBoardManager Instance { get; set; }
 
 
-    [SerializeField] private GameObject blocker;
+    [SerializeField] private GameObject blocker;    // a transparent gameobject that will block user to click the chessboard.
     [SerializeField] GameObject retract_Message;
     [SerializeField] private GameObject wait_Message;
-    [SerializeField] private Transform white_stone;
+    [SerializeField] private Transform white_stone;     
     [SerializeField] private Transform black_stone;
     [SerializeField] private AudioClip playStoneClip;
     [SerializeField] private Button retract_button;
@@ -27,14 +31,14 @@ public class ChessBoardManager : MonoBehaviour
     //private int x, y;
     private int steps;
 
-    private Transform stones_parent;
+    private Transform stones_parent;    // a empty gameobject to store the stone in Hierarchy, can consider it as a folder while stones are the files
     AudioSource audioSource;
     
-    Transform[,] grid_transforms = new Transform[19, 19];
-    Transform[,] stones_transforms = new Transform[19, 19];
-    int[,] chess_board_grids = new int[19, 19];
+    Transform[,] grid_transforms = new Transform[19, 19];   // there are 19*19 grids, grids are clickable, when click, send message to place a stone
+    Transform[,] stones_transforms = new Transform[19, 19]; // a 19*19 2D array to store the stones gameobject
+    int[,] chess_board_grids = new int[19, 19]; // used to keep track of which location are placed with stone, and the color of it.
 
-    Vector2 offset = new Vector2(-3.969f, -3.969f);
+    Vector2 offset = new Vector2(-3.969f, -3.969f); // offset of chessboard of the whole world
     float cell_size = 0.441f;
 
     
@@ -82,7 +86,7 @@ public class ChessBoardManager : MonoBehaviour
         return my_stone_color;
     }
 
-    private void Step_Update(int _step) {
+    private void Step_Update(int _step) {   // it counts how many stone are placed, for multiplayer only
         if (MatchData.Get_Game_Mode() == ClassManager.GameMode.randomplayer)
             return;
         if (MatchData.Get_Game_Mode() == ClassManager.GameMode.spector)
@@ -101,7 +105,7 @@ public class ChessBoardManager : MonoBehaviour
     }
 
     public void Init_Game(ClassManager.GameMode mode, string startTime, ClassManager.PlayerLog _p1Log, ClassManager.PlayerLog _p2Log) {
-
+        // called by gameManager
         audioSource.clip = playStoneClip;
         steps = 0;
 
@@ -177,6 +181,7 @@ public class ChessBoardManager : MonoBehaviour
     }
     public void Send_Message_To_Room(ClassManager.MessageType type, string message)
     {
+        // send message to all the players in the same room.
         foreach (string pname in PlayerLocalData.Get_Current_Room_Info().Get_All_Name())
         {
             NetworkConnecter.Instance.Send_Message_To_Target_Client_ServerRpc(type, message, pname);
@@ -208,13 +213,14 @@ public class ChessBoardManager : MonoBehaviour
 
 
     public void Place_A_Stone_Multiplayer(string jsonR) {
+        // called by gameManager when opponent placed a stone
         Vector2Int xy_index = JsonConvert.DeserializeObject<Vector2Int>(jsonR);
         Place_A_Stone(xy_index.x, xy_index.y);
     }
 
     public void Place_A_Stone(int x, int y)
     {
-
+        // Instantiate a stone gameObject 
         grid_transforms[x, y].gameObject.SetActive(false);
         Vector3 vec3 = new(x * cell_size + offset.x, y * cell_size + offset.y, 0);
         Transform newStone;
@@ -250,6 +256,7 @@ public class ChessBoardManager : MonoBehaviour
 
 
     public void Response_To_Request(bool isAgree) {
+        // abandoned
         if (isAgree)
         {
             blocker.SetActive(true);
@@ -460,6 +467,7 @@ public class ChessBoardManager : MonoBehaviour
     }
 
     public void Display_Backward() {
+        // Display_Backward in game record 
         if (display_index < 0)
             return;
            
@@ -472,7 +480,7 @@ public class ChessBoardManager : MonoBehaviour
     }
 
     public void Display_Forward() {
-
+        // Display_Forward in game record
         if (display_index >= stoneList.Count - 1)
             return;
         display_index++;

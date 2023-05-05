@@ -11,6 +11,30 @@ using System.Collections.Generic;
 
 public class FirebaseManager : MonoBehaviour
 {
+    /*
+     *  This script manage to access data from database, which is firebase.
+     *  There are 9 main function.
+     *      Get_Game_Records
+     *      Get_Friend_Dict
+     *      Get_Item_List
+     *      GetServerIP - it is abandoned in this version. It used to get a available server IP from the database (there maybe more than 1 server), and connect to it.
+     *      Before_Registering - it will check whether the account already exists, if not, will call Register()
+     *      Register
+     *      Before_Login
+     *      Updata_Playerlog
+     *      Updata_Friend_List
+     *    
+     *    There are also some DatabaseReference type function.
+     *    GetUserReference
+     *    GetUserLogReference
+     *    GetFriendListReference
+     *    GetItemListReference
+     *    GetPlayerGameRecordReference
+     *    ...
+     *    GetServerReference
+     *    
+     *    These function will return the reference of database.
+     */
     public static FirebaseManager Instance { set; get; }
 
     private string playerName_local;
@@ -242,117 +266,6 @@ public class FirebaseManager : MonoBehaviour
 
     }
 
-
-    /*
-    public void Login_old(string _playerName, string password) {
-        playerName = _playerName;
-        GetUserReference().Child(_playerName).Child("password").GetValueAsync().ContinueWithOnMainThread(task =>
-        {
-            if (task.IsCompletedSuccessfully)
-            {
-                DataSnapshot snapshot = task.Result;
-                var result = snapshot.Value.ToString();
-                if (string.Equals(result, password))
-                {
-
-                    GetUserLogReference().GetValueAsync().ContinueWithOnMainThread(task3 =>
-                    {
-                        if (task3.IsCompletedSuccessfully)
-                        {
-                            DataSnapshot snapshot = task3.Result;
-                            var jsonRecord = snapshot.GetRawJsonValue();
-                            PlayerLocalData.SetPlayerLog(JsonUtility.FromJson<ClassManager.PlayerLog>(jsonRecord));
-                            GameManager.Instance.OnPlayerLogin();
-
-                        }
-                        if (task3.IsCanceled)
-                        {
-                            LoginMenuUI.Instance.Pop_Fail_Message("Firebase no response");
-                        }
-                        if (task3.IsFaulted)
-                        {
-                            LoginMenuUI.Instance.Pop_Fail_Message("Firebase no response");
-                        }
-                    });
-
-
-                }
-                else
-                {
-                    LoginMenuUI.Instance.Pop_Fail_Message("Password is wrong");
-                }
-
-            }
-            if (task.IsCanceled)
-            {
-                LoginMenuUI.Instance.Pop_Fail_Message("Firebase no response");
-            }
-            if (task.IsFaulted)
-            {
-                LoginMenuUI.Instance.Pop_Fail_Message("Firebase no response");
-            }
-
-        });
-
-
-        
-        GetServerReference().GetValueAsync().ContinueWithOnMainThread(task =>
-        {
-            if (task.IsCompletedSuccessfully)
-            {
-                DataSnapshot snapshot = task.Result;
-                string targetIP = snapshot.Value.ToString();
-                PlayerLocalData.Instance.SetTargetIP(targetIP);
-
-                GetUserLogReference().GetValueAsync().ContinueWithOnMainThread(task3 =>
-                {
-                    if (task3.IsCompletedSuccessfully)
-                    {
-                        DataSnapshot snapshot = task3.Result;
-                        var jsonRecord = snapshot.GetRawJsonValue();
-                        PlayerLocalData.Instance.SetPlayerLog(JsonUtility.FromJson<ClassManager.PlayerLog>(jsonRecord));
-                        GameManager.Instance.OnPlayerLogin();
-
-                    }
-                });
-            }
-        });
-
-
-
-        auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
-        {
-            if (task.IsCompletedSuccessfully)
-            {
-
-                GetServerReference().GetValueAsync().ContinueWithOnMainThread(task2 =>
-                {
-                    if (task2.IsCompletedSuccessfully)
-                    {
-                        DataSnapshot snapshot = task2.Result;
-                        string targetIP = snapshot.Value.ToString();
-                        PlayerLocalData.Instance.SetTargetIP(targetIP);
-
-                        GetUserLogReference().GetValueAsync().ContinueWithOnMainThread(task3 =>
-                        {
-                            if (task3.IsCompletedSuccessfully)
-                            {
-                                DataSnapshot snapshot = task3.Result;
-                                var jsonRecord = snapshot.GetRawJsonValue();
-                                PlayerLocalData.Instance.SetPlayerLog(JsonUtility.FromJson<ClassManager.PlayerLog>(jsonRecord));
-                                GameManager.Instance.OnPlayerLogin();
-
-                            }
-                        });
-                    }
-                });
-            }
-        });
-
-        
-    }
-
-    */
     
     public void Updata_Playerlog() {
         var jsonRecord = JsonConvert.SerializeObject(PlayerLocalData.GetPlayerLog());
@@ -389,29 +302,8 @@ public class FirebaseManager : MonoBehaviour
     }
 
     public void Before_Login(string username, string password) {
-
         StartCoroutine(Login(username, password));
-
-        /*
-        DatabaseReference reference = GetUserReference();
-        reference.Child(username).Child("password").GetValueAsync().ContinueWithOnMainThread(task => {
-            if (task.IsCompletedSuccessfully)
-            {
-                DataSnapshot snapshot = task.Result;
-                var jsonRecord = snapshot.GetRawJsonValue();
-                if (jsonRecord == null)
-                {
-                    LoginMenuUI.Instance.Pop_Fail_Message("Account does not exist");
-                }
-                else
-                {
-                    Login(username, password);
-                }
-            }
-        });
-        */
     }
-
 
     public DatabaseReference GetUserReference()
     {

@@ -4,6 +4,10 @@ using UnityEngine;
 using System;
 public static class ClassManager
 {
+    /*
+     * This script are only used for storing classes and enum in this game
+     * The class with header [Serializable]: so that it can be translated to json and to send to the server
+     */
 
     [Serializable]
     public class GameRecord

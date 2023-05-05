@@ -4,6 +4,10 @@ using UnityEngine;
 using Newtonsoft.Json;
 public static class RoomTitleData
 {
+    /*
+     *  This script is abandoned, but we keep it here just in case.
+     * 
+     */
     public static Dictionary<int, ClassManager.RoomTitle> roomTitles = new Dictionary<int, ClassManager.RoomTitle>();
 
 

@@ -6,6 +6,12 @@ using TMPro;
 using Newtonsoft.Json;
 public class Friend_Grid : MonoBehaviour
 {
+    /*
+     * This script is to init the text, which is a user name, in the button that located in friend-list
+     * 
+     * Change_State is to change the color of the friend to tell online/ offline/ in-game
+     * Invite_Friend: if the user is in game lobby, it will send a invite message to the friend.
+     */
     [SerializeField] Image state_icon;
     [SerializeField] TMP_Text playerName;
     [SerializeField] Button onClick;

@@ -5,7 +5,12 @@ using UnityEngine;
 using Newtonsoft.Json;
 public static class PlayerLocalData
 {
-    //public static PlayerLocalData Instance { get; set; }
+
+    /*
+     *  This script is to store the player local data as a gameobject.
+     *  Such as player log, friend_dict, game_records, temp_game_records, background_list (chessboard skin)
+     * 
+     */
 
     private static ClassManager.PlayerLog log;
     private static string targetIP = "127.0.0.1";

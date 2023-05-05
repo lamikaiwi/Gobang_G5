@@ -4,7 +4,10 @@ using UnityEngine;
 
 public static class OpponentData
 {
-    //public static OpponentData Instance { get; set; }
+    /*
+     *  This script is to store the opponent data as a gameobject.
+     * 
+     */
 
 
     private static ClassManager.PlayerLog log;

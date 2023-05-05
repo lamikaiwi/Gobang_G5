@@ -5,7 +5,10 @@ using UnityEngine.UI;
 using TMPro;
 public class Admin_Grid : MonoBehaviour
 {
-
+    /*
+     *  This script is to init the text, which is a user name, in the button that located in user-list
+     * 
+     */
     public TMP_Text nameField;
     public Button button;
 

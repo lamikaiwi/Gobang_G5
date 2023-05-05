@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class VolumeSetting : MonoBehaviour
 {
+    /*
+     *  Set the volume of bgm.
+     */
     public AudioSource AS;
     public Slider slider;
 

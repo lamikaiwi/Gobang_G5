@@ -11,6 +11,20 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    /*
+     * This script manage some important event such as
+     * OnPlayerLogin, OnPlayerLogout, OnEnterMainMenu, OnRoomListMenu, OnEnterWaitingRoom,
+     * OnStartRandomMode, OnMatchStart, OnMatchOver
+     * 
+     * And it also manage the message sending/ receiving process
+     * Send_Message_To_Server, Send_Message_To_All, Send_Message_To_Target, Receive_Message
+     * 
+     * Send_Message_To_Server - send a message to server, the receiver is the server.
+     * Send_Message_To_All -  send a message to server, and the server will send this message to every client who is online.
+     * Send_Message_To_Target - send a message to server, and the server will send this message to the target client.
+     * Receive_Message - called by server, it perform different action depends on the message type 
+     * 
+     */
     public static GameManager Instance { set; get; }
 
 

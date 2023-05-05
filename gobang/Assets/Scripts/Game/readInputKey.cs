@@ -6,6 +6,11 @@ using UnityEngine.Events;
 using TMPro;
 public class readInputKey : MonoBehaviour
 {
+    /*
+     * This script mainly used in login and sign-up stage, allow users to use "TAB", "Enter" short keys.
+     * Say when the user is typing the name in the name_text_field, he can press TAB to move to password_text_field
+     * 
+     */
     public UnityEvent onKeyPressed;
 
     [SerializeField] private KeyCode[] getKey;
